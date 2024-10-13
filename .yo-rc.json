@@ -4,6 +4,8 @@
     "baseName": "nodejs",
     "cli": true,
     "cliName": "nhipster",
+    "creationTimestamp": 1728722137663,
+    "devServerPort": 4200,
     "entities": [],
     "generators": {
       "bootstrap-application": {
@@ -95,9 +97,12 @@
         "written": true
       }
     },
-    "jhipsterVersion": "8.0.0-beta.3",
+    "jhipsterVersion": "8.5.0",
     "js": true,
+    "jwtSecretKey": "ZDY0MDg4ODMyZDVlM2ExYTc5ZjM5YmZhYWJhNjFmOWQ4NTE0YWU1OTExMmIzMTJmZDRiMWYwNTk2ZDJhMGJlMWI5OTcwZTk3NjBkMTgwMWUzN2JkZmI5M2RkNDE4YmYyMGVmMTI2MWNiZDNkZmU0YmU3ZDI2ZWU0MGRjZjhhZjA=",
+    "languages": ["en"],
     "localBlueprint": false,
+    "nativeLanguage": "en",
     "sampleWritten": true,
     "skipCommitHook": true,
     "subGenerators": ["bootstrap-application", "ci-cd", "client", "cypress", "docker", "languages", "server"]
