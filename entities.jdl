@@ -27,8 +27,8 @@ entity Location {
   id Long required,
   brandId Long required,
   country String,
-  region String, // Optional (e.g., state or province)
-  city String // Optional (if more granularity is needed)
+  region String,
+  city String
 }
 
 entity SocialMediaAccount {
@@ -58,9 +58,9 @@ entity FollowersTimeline {
 entity FollowerAgeGroup {
   id Long required,
   accountId Long required,
-  ageGroup String required, // Follower age group (e.g., '13-17', '18-24')
-  followerCount Long required, // Number of followers in this age group
-  timestamp Instant required // Timestamp for when the data was last updated
+  ageGroup String required,
+  followerCount Long required,
+  timestamp Instant required
 }
 
 entity FollowerAgeGroupTimeline {
@@ -74,8 +74,8 @@ entity FollowerAgeGroupTimeline {
 entity FollowerGender {
   id Long required,
   accountId Long required,
-  gender GenderType required, // Gender of the followers (ENUM below)
-  followerCount Long required, // Number of followers in this gender group
+  gender GenderType required,
+  followerCount Long required,
   timestamp Instant required
 }
 
@@ -90,43 +90,39 @@ entity FollowerGenderTimeline {
 entity FollowerGeography {
   id Long required,
   accountId Long required,
-  country String required, // Follower's country (e.g., 'USA')
-  region String, // Follower's region (Optional)
+  country String required,
+  region String,
   city String,
-  followerCount Long required, // Number of followers in this geography
+  followerCount Long required,
   updatedAt Instant required
 }
 
 entity FollowerGeographyTimeline {
   id Long required,
   accountId Long required,
-  country String required, // Follower's country (e.g., 'USA')
-  region String, // Follower's region (Optional)
+  country String required,
+  region String,
   city String,
-  followerCount Long required, // Number of followers in this geography
+  followerCount Long required,
   updatedAt Instant required
 }
 
-// Enumerations for gender
 enum GenderType {
   MALE, FEMALE, NON_BINARY, OTHER, PREFER_NOT_TO_SAY
 }
 
-// Table for storing follower activity based on time intervals
 entity FollowerActivity {
   accountId Long required,
-  dayOfWeek DayOfWeekType required, // ENUM representing day of the week
-  timeOfDay TimeInterval required, // ENUM representing time intervals (e.g., hourly slots)
-  activeFollowersCount Long required, // Number of followers active during this time slot
-  updatedAt Instant required // Timestamp for when the data was last updated
+  dayOfWeek DayOfWeekType required,
+  timeOfDay TimeInterval required,
+  activeFollowersCount Long required,
+  updatedAt Instant required
 }
 
-// Enumeration for day of the week
 enum DayOfWeekType {
   MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY
 }
 
-// Enumeration for time intervals
 enum TimeInterval {
   MIDNIGHT_TO_1AM,
   ONE_AM_TO_2AM,
@@ -168,17 +164,14 @@ entity SocialMediaPerformance {
   avgEngagementDepth Long,
   avgRelevanceScore Long,
   avgInfluenceScore Long,
-  postingFrequency Integer, // Number of posts per month
+  postingFrequency Integer,
   createdAt Instant required,
 }
 
 entity ContentAnalysis {
   id Long required,
   socialMediaAccountId Long required,
-  topContentTypes String, // Top 3 content types (e.g., Image, Video)
-  //topCreators String, // Top 3 creators
-  //topContentTopics String, // Top 3 topics
-  //topContentTones String // Top 3 tones
+  topContentTypes String
 }
 
 entity BrandCreators {
@@ -207,7 +200,7 @@ entity BrandTopics {
 
 entity BrandContentType {
   brandId Long required,
-  contentType String required, // promotional, awareness, informative
+  contentType String required,
   contentRank Integer required,
   numberOfPosts Integer required,
   updatedAt ZonedDateTime required,
@@ -252,10 +245,10 @@ entity Post {
   mediaId String required,
   mediaLink String required,
   mediaTimestamp ZonedDateTime required,
-  dayPosted DayOfWeekType, // E.g., "Monday"
-  contentType String, // E.g., Image, Video
-  contentTopic String, // E.g., Product Launch
-  contentTone String, // E.g., Informative
+  dayPosted DayOfWeekType,
+  contentType String,
+  contentTopic String,
+  contentTone String,
   caption String required,
   transcript String,
   createdAt ZonedDateTime required,
@@ -273,7 +266,7 @@ entity PostMetrics {
 entity EngagementMetrics {
   id Long required,
   socialMediaAccountId Long required,
-  creatorId Long, // Reference to Creator (if needed)
+  creatorId Long,
   likes Long required,
   comments Long required,
   shares Long required,
@@ -283,7 +276,6 @@ entity EngagementMetrics {
   updatedBy Long required,
   isDeleted Boolean required
 }
-
 
 entity Collaborations {
   postId Long required,
@@ -335,12 +327,10 @@ relationship OneToMany {
   FollowerGender{followerGenderTimeline} to FollowerGenderTimeline{accountId}
 }
 
-// Bidirectional relationships
 relationship ManyToOne {
   SocialMediaAccount{brand} to Brand
   ContactInfo{brand} to Brand
   Location{brand} to Brand
-  SocialMediaAccount{brand} to Brand
   Post{socialMediaAccount} to SocialMediaAccount
   EngagementMetrics{socialMediaAccount} to SocialMediaAccount
   SocialMediaPerformance{socialMediaAccount} to SocialMediaAccount
@@ -349,9 +339,7 @@ relationship ManyToOne {
   EngagementMetrics{creator} to Creator{engagementMetrics}
 }
 
-// Optional relationships
 relationship OneToMany {
   Brand{competitions} to Competition{brandId}
   Brand{creators} to BrandCreators{brandId}
 }
-
